@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { createCard } from "./redux/modules/myboard";
 import { useHistory } from "react-router-dom";
+import { createCardFB } from "./redux/modules/myboard";
 
 function Word(props) {
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ function Word(props) {
       desc: input_desc.current.value,
       exam: input_exam.current.value,
     };
-    dispatch(createCard(input_data));
+    dispatch(createCardFB(input_data));
     window.setTimeout(() => {
       history.push("/");
     }, 500);
@@ -100,7 +101,7 @@ const Add_btn = styled.div`
   transform: translateX(-50%);
   &:hover {
     color: #e97341;
-    background: #eee;
+    background: rgb(152, 216, 163);
     box-shadow: inset -4px -4px 6px 0 rgba(0, 0, 0, 0.2);
     transition: 0.2s;
   }

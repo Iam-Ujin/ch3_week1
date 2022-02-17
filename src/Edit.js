@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { updateCard } from "./redux/modules/myboard";
+import { updateCard, updateCardFB } from "./redux/modules/myboard";
 
 function Edit(props) {
   const card_list = useSelector((state) => state.myboard.list);
@@ -22,10 +22,8 @@ function Edit(props) {
       desc: desc.current.value,
       exam: exam.current.value,
     };
-    dispatch(updateCard(input_data));
-    window.setTimeout(() => {
-      history.push("/");
-    }, 500);
+    dispatch(updateCardFB(card_list[card_index].id, input_data));
+    history.push("/");
   };
 
   return (
@@ -98,7 +96,7 @@ const Add_btn = styled.div`
   transform: translateX(-50%);
   &:hover {
     color: #e97341;
-    background: #eee;
+    background: rgb(152, 216, 163);
     box-shadow: inset -4px -4px 6px 0 rgba(0, 0, 0, 0.2);
     transition: 0.2s;
   }

@@ -2,12 +2,16 @@ import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { removeCard } from "./redux/modules/myboard";
+import { removeCardFB, loadCardFB } from "./redux/modules/myboard";
 
 function Board(props) {
   const history = useHistory();
   const dispatch = useDispatch();
   const my_list = useSelector((state) => state.myboard.list);
+
+  React.useEffect(() => {
+    dispatch(loadCardFB());
+  }, []);
 
   return (
     <Back>
@@ -17,47 +21,49 @@ function Board(props) {
       <Main>
         {my_list.map((l, idx) => {
           return (
-            <Section>
+            <Section key={idx}>
               <div>
-                <span style={{ fontWeight: "bold" }}>단어</span>
-                <Edit_box>
-                  <Edit_btn
-                    onClick={() => {
-                      history.push("/edit/" + idx);
-                    }}
-                  >
-                    🥕
-                  </Edit_btn>
-                  <Del_btn
-                    onClick={() => {
-                      dispatch(removeCard(idx));
-                    }}
-                  >
-                    🗑
-                  </Del_btn>
-                </Edit_box>
-                <p style={{ fontSize: "12px" }}>{l.word}</p>
+                <Section_top>
+                  <Span>단어</Span>
+                  <Edit_box>
+                    <Edit_btn
+                      onClick={() => {
+                        history.push("/edit/" + idx);
+                      }}
+                    >
+                      🥕
+                    </Edit_btn>
+                    <Del_btn
+                      onClick={() => {
+                        dispatch(removeCardFB(my_list[idx].id));
+                      }}
+                    >
+                      🗑
+                    </Del_btn>
+                  </Edit_box>
+                </Section_top>
+                <p>{l.word}</p>
               </div>
               <div>
-                <span style={{ fontWeight: "bold" }}>설명</span>
-                <p style={{ fontSize: "12px" }}>{l.desc}</p>
+                <Span>설명</Span>
+                <p>{l.desc}</p>
               </div>
               <div>
-                <span style={{ fontWeight: "bold" }}>예시</span>
+                <Span>예시</Span>
                 <Example>{l.exam}</Example>
               </div>
             </Section>
           );
         })}
-        <Add_btn>
-          <button
+        <Add_btn_box>
+          <Add_btn
             onClick={() => {
               history.push("/word");
             }}
           >
-            추가
-          </button>
-        </Add_btn>
+            🥕
+          </Add_btn>
+        </Add_btn_box>
       </Main>
     </Back>
   );
@@ -103,6 +109,13 @@ const Section = styled.div`
     box-shadow: 0px 0px 20px 1px #999;
     transition: 0.3s;
   }
+  overflow: hidden;
+`;
+const Section_top = styled.div`
+  justify-content: space-between;
+`;
+const Span = styled.span`
+  font-weight: bold;
 `;
 const Edit_box = styled.div`
   width: 100%;
@@ -123,16 +136,30 @@ const Del_btn = styled.div`
   margin-left: 5px;
 `;
 const Example = styled.p`
-  font-size: 12px;
   color: #3c9ddf;
 `;
-const Add_btn = styled.div`
+const Add_btn_box = styled.div`
   display: block;
   position: fixed;
-  bottom: 20px;
+  bottom: 5px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 5;
+`;
+const Add_btn = styled.button`
+  width: 60px;
+  height: 60px;
+  border: none;
+  border-radius: 40px;
+  background: #f1ad90;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  &:hover {
+    background: rgb(152, 216, 163);
+    transition: 0.3s;
+  }
 `;
 
 export default Board;
