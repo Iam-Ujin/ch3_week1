@@ -1,8 +1,7 @@
 # 나만의 사전 만들기 
 🥕 당근 사전 🥕
 
- 
-### 사이트 주소 : http://ujin16.shop.s3-website.ap-northeast-2.amazonaws.com/
+#### 사이트 주소 : http://ujin16.shop.s3-website.ap-northeast-2.amazonaws.com/
 --------------
 ## 제작기간
 * 22년 2월 11일 ~ 22년 2월 17일  
